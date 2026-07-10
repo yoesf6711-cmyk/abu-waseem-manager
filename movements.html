@@ -1,0 +1,7 @@
+
+{% extends "base.html" %}{% block content %}
+<h1>سجل جميع الحركات</h1>
+<form method="get" class="panel"><label>بحث<input name="q" value="{{q}}" placeholder="بيع، صيانة، موظف..."></label><button>بحث</button></form>
+<div class="table"><table><tr><th>التاريخ والوقت</th><th>المستخدم</th><th>الموظف</th><th>الحركة</th><th>القسم</th><th>المبلغ</th><th>التفاصيل</th></tr>
+{% for r in rows %}<tr><td>{{r.date_time}}</td><td>{{r.username or '-'}}</td><td>{{r.employee or '-'}}</td><td>{{r.action}}</td><td>{{r.section}}</td><td>{{r.amount|money}}</td><td>{{r.details}}</td></tr>{% endfor %}
+</table></div>{% endblock %}

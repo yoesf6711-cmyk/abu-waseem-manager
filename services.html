@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block content %}
+<h1>الرصيد والمنصات والألعاب</h1>
+<form method="post" class="panel formgrid"><label>التاريخ<input name="date" type="date"></label><label>نوع الخدمة<select name="service_type"><option>رصيد يومي</option><option>حجز جواز سفر</option><option>شدات ببجي</option><option>بيع لعبة</option><option>خدمة إلكترونية</option></select></label>
+<label>الوصف/الموقع<input name="description"></label><label>التكلفة أو شراء الرصيد<input name="cost" type="number" value="0"></label><label>البيع أو إجمالي مبيعات اليوم<input name="sale" type="number" value="0"></label>
+<label>الموظف<select name="employee_id"><option value="">بدون</option>{% for e in employees %}<option value="{{e.id}}">{{e.name}}</option>{% endfor %}</select></label><label class="wide">ملاحظات<input name="notes"></label><button>تسجيل</button></form>
+<h2>تجميع الرصيد اليومي</h2><p class="hint">بدل إدخال كل 1000 أو 2000، أدخل إجمالي شراء الرصيد وإجمالي المبيعات مرة واحدة بنهاية اليوم.</p>
+<div class="table"><table><tr><th>التاريخ</th><th>المزود</th><th>الشراء</th><th>المبيعات</th><th>الربح</th></tr>{% for r in balance %}<tr><td>{{r.date}}</td><td>{{r.provider}}</td><td>{{r.purchase_total|money}}</td><td>{{r.sales_total|money}}</td><td>{{r.profit|money}}</td></tr>{% endfor %}</table></div>
+<h2>الخدمات الأخرى</h2><div class="table"><table><tr><th>التاريخ</th><th>الخدمة</th><th>الوصف</th><th>الربح</th><th>الموظف</th><th>العمولة</th></tr>{% for r in rows %}<tr><td>{{r.date}}</td><td>{{r.service_type}}</td><td>{{r.description}}</td><td>{{r.profit|money}}</td><td>{{r.employee or '-'}}</td><td>{{r.commission|money}}</td></tr>{% endfor %}</table></div>
+{% endblock %}

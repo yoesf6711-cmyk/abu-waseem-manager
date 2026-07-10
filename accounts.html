@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block content %}
+<h1>المحافظ الإلكترونية والحسابات البنكية</h1>
+<div class="grid2">
+<form method="post" class="panel"><input type="hidden" name="kind" value="account"><h2>إضافة حساب</h2><label>الاسم<input name="name" placeholder="شام كاش، بنك..." required></label><label>النوع<select name="account_type"><option>محفظة إلكترونية</option><option>حساب بنكي</option><option>صندوق نقدي</option></select></label><label>الرصيد الافتتاحي<input name="opening_balance" type="number" value="0"></label><button>إضافة</button></form>
+<form method="post" class="panel"><input type="hidden" name="kind" value="transaction"><h2>حركة حساب</h2><label>التاريخ<input name="date" type="date"></label><label>الحساب<select name="account_id">{% for a in accounts %}<option value="{{a.id}}">{{a.name}}</option>{% endfor %}</select></label><label>النوع<select name="type"><option>إيداع</option><option>سحب</option></select></label><label>المبلغ<input name="amount" type="number" required></label><label>البيان<input name="description"></label><button>حفظ</button></form>
+</div>
+<div class="cards">{% for a in accounts %}<div class="card"><b>{{a.name}}</b><small>{{a.account_type}}</small><span>{{a.balance|money}}</span></div>{% endfor %}</div>
+<div class="table"><table><tr><th>التاريخ</th><th>الحساب</th><th>النوع</th><th>المبلغ</th><th>البيان</th></tr>{% for r in tx %}<tr><td>{{r.date}}</td><td>{{r.account}}</td><td>{{r.type}}</td><td>{{r.amount|money}}</td><td>{{r.description}}</td></tr>{% endfor %}</table></div>
+{% endblock %}

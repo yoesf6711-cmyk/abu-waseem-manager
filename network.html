@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% block content %}
+<h1>شبكة الإنترنت</h1>
+<div class="cards"><div class="card"><b>الدخل</b><span>{{totals.income|money}}</span></div><div class="card"><b>المصروف</b><span>{{totals.expense|money}}</span></div><div class="card"><b>الصافي</b><span>{{(totals.income-totals.expense)|money}}</span></div><div class="card"><b>حصة كل شريك</b><span>{{((totals.income-totals.expense)/2)|money}}</span></div></div>
+<div class="grid2">
+<form method="post" class="panel"><input type="hidden" name="kind" value="subscriber"><h2>إضافة مشترك</h2>
+<label>الاسم<input name="name" required></label><label>الهاتف<input name="phone"></label><label>الباقة<input name="plan"></label><label>الاشتراك الشهري<input name="monthly_fee" type="number"></label><label>الدين الحالي<input name="debt" type="number" value="0"></label><label>الحالة<select name="status"><option>فعال</option><option>موقوف</option></select></label><button>حفظ المشترك</button></form>
+<form method="post" class="panel"><input type="hidden" name="kind" value="transaction"><h2>دخل أو مصروف</h2>
+<label>التاريخ<input name="date" type="date"></label><label>النوع<select name="type"><option>دخل</option><option>مصروف</option></select></label><label>المبلغ<input name="amount" type="number" required></label><label>البيان<input name="description"></label><label>الدفع<input name="payment_method"></label><button>حفظ العملية</button></form>
+</div>
+<h2>المشتركون</h2><div class="table"><table><tr><th>الاسم</th><th>الهاتف</th><th>الباقة</th><th>الاشتراك</th><th>الدين</th><th>الحالة</th></tr>{% for r in subscribers %}<tr><td>{{r.name}}</td><td>{{r.phone}}</td><td>{{r.plan}}</td><td>{{r.monthly_fee|money}}</td><td>{{r.debt|money}}</td><td>{{r.status}}</td></tr>{% endfor %}</table></div>
+<h2>حركة الشبكة</h2><div class="table"><table><tr><th>التاريخ</th><th>النوع</th><th>المبلغ</th><th>البيان</th></tr>{% for r in tx %}<tr><td>{{r.date}}</td><td>{{r.type}}</td><td>{{r.amount|money}}</td><td>{{r.description}}</td></tr>{% endfor %}</table></div>
+{% endblock %}

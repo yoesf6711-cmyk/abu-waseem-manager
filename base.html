@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}إدارة أبو وسيم{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+</head>
+<body>
+<header>
+  <div><strong>أبو وسيم للاتصالات</strong><small>نظام الإدارة الموحد</small></div>
+  <button class="menu" onclick="document.querySelector('nav').classList.toggle('show')">☰</button>
+  <nav>
+    <a href="/">الرئيسية</a><a href="/products">المخزون</a><a href="/sales">المبيعات</a>
+    <a href="/sim-sales">بيع الخطوط</a><a href="/repairs">الصيانة</a><a href="/network">الشبكة</a>
+    <a href="/services">الخدمات والرصيد</a>
+    {% if session.get("user_role") == "مدير" %}
+    <a href="/debts">الديون</a><a href="/accounts">المحافظ والبنوك</a><a href="/employees">الموظفون</a>
+    <a href="/users">المستخدمون</a><a href="/movements">سجل الحركات</a>
+    {% endif %}
+    <a href="/logout">خروج ({{session.get("username")}})</a>
+  </nav>
+</header>
+<main>
+{% with msgs=get_flashed_messages() %}{% if msgs %}<div class="flash">{{ msgs[-1] }}</div>{% endif %}{% endwith %}
+{% block content %}{% endblock %}
+</main>
+<footer>نسخة أولية قابلة للتطوير — جميع البيانات محفوظة في قاعدة SQLite</footer>
+<script>
+function fillPrice(sel){
+ const opt=sel.options[sel.selectedIndex];
+ const price=document.getElementById('sale_price');
+ if(price && opt.dataset.price) price.value=opt.dataset.price;
+}
+</script>
+</body></html>

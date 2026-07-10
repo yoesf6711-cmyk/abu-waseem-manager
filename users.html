@@ -1,0 +1,12 @@
+
+{% extends "base.html" %}{% block content %}
+<h1>المستخدمون والصلاحيات</h1>
+<form method="post" class="panel formgrid">
+<label>اسم المستخدم<input name="username" required></label>
+<label>كلمة المرور<input name="password" type="password" required></label>
+<label>الصلاحية<select name="role"><option>موظف</option><option>مدير</option></select></label>
+<label>ربط بموظف<select name="employee_id"><option value="">بدون</option>{% for e in employees %}<option value="{{e.id}}">{{e.name}} — {{e.role}}</option>{% endfor %}</select></label>
+<button>إنشاء المستخدم</button></form>
+<div class="table"><table><tr><th>اسم المستخدم</th><th>الصلاحية</th><th>الموظف المرتبط</th><th>تغيير كلمة المرور</th></tr>
+{% for r in rows %}<tr><td>{{r.username}}</td><td>{{r.role}}</td><td>{{r.employee or '-'}}</td><td><form class="inline" method="post" action="/users/{{r.id}}/password"><input name="password" type="password" placeholder="كلمة جديدة" required><button>تغيير</button></form></td></tr>{% endfor %}
+</table></div>{% endblock %}

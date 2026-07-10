@@ -1,0 +1,13 @@
+{% extends "base.html" %}{% block content %}
+<h1>قسم الصيانة</h1>
+<form method="post" class="panel formgrid">
+<label>التاريخ<input type="date" name="date"></label><label>الزبون<input name="customer"></label>
+<label>الجهاز<input name="device" required></label><label>العطل<input name="issue"></label>
+<label>الفني<select name="technician_id">{% for e in employees %}<option value="{{e.id}}">{{e.name}} ({{e.commission_rate}}%)</option>{% endfor %}</select></label>
+<label>المبلغ المقبوض<input name="amount" type="number" step="0.01" required></label>
+<label>تكلفة القطع<input name="parts_cost" type="number" step="0.01" value="0"></label>
+<label>الحالة<select name="status"><option>جاري</option><option>جاهز</option><option>تم التسليم</option></select></label>
+<label class="wide">ملاحظات<input name="notes"></label><button>تسجيل الصيانة</button></form>
+<div class="table"><table><tr><th>التاريخ</th><th>الجهاز</th><th>الفني</th><th>المبلغ</th><th>القطع</th><th>الربح</th><th>حصة الفني</th><th>الحالة</th></tr>
+{% for r in rows %}<tr><td>{{r.date}}</td><td>{{r.device}}</td><td>{{r.technician or '-'}}</td><td>{{r.amount|money}}</td><td>{{r.parts_cost|money}}</td><td>{{r.profit|money}}</td><td>{{r.commission|money}}</td><td>{{r.status}}</td></tr>{% endfor %}
+</table></div>{% endblock %}

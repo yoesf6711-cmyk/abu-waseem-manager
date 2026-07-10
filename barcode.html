@@ -1,0 +1,5 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>باركود {{p.name}}</title>
+<style>body{font-family:Arial;text-align:center;padding:30px}.label{width:280px;border:1px solid #ddd;padding:15px;margin:auto}svg{max-width:100%}@media print{button{display:none}.label{border:0}}</style></head>
+<body><div class="label"><h3>{{p.name}}</h3><svg id="barcode"></svg><b>{{p.sale_price|money}}</b></div><br><button onclick="print()">طباعة</button>
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+<script>JsBarcode("#barcode","{{p.barcode}}",{format:"CODE128",displayValue:true});</script></body></html>

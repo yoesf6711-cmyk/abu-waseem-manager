@@ -1,0 +1,10 @@
+
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>دخول نظام أبو وسيم</title><link rel="stylesheet" href="{{url_for('static',filename='style.css')}}"></head>
+<body class="login-page"><form method="post" class="login-box">
+<h1>أبو وسيم للاتصالات</h1><p>تسجيل الدخول إلى نظام الإدارة</p>
+{% with msgs=get_flashed_messages() %}{% if msgs %}<div class="flash">{{msgs[-1]}}</div>{% endif %}{% endwith %}
+<label>اسم المستخدم<input name="username" required autofocus></label>
+<label>كلمة المرور<input type="password" name="password" required></label>
+<button>دخول</button><small>الحساب الافتراضي لأول مرة: admin / 123456</small>
+</form></body></html>

@@ -1,0 +1,25 @@
+{% extends "base.html" %}{% block content %}
+<h1>لوحة التحكم</h1>
+<div class="cards">
+<div class="card"><b>قيمة المخزون</b><span>{{stats.stock_value|money}}</span></div>
+<div class="card"><b>ربح المبيعات قبل العمولة</b><span>{{stats.sales_profit|money}}</span></div>
+<div class="card"><b>ربح الصيانة قبل العمولة</b><span>{{stats.repair_profit|money}}</span></div>
+<div class="card"><b>صافي الشبكة</b><span>{{stats.network_net|money}}</span></div>
+<div class="card"><b>حصة الشريك 50%</b><span>{{stats.partner_share|money}}</span></div>
+<div class="card"><b>المشتركون الفعالون</b><span>{{stats.subscribers}}</span></div>
+<div class="card"><b>ديون لنا</b><span>{{stats.receivables|money}}</span></div>
+<div class="card"><b>ديون علينا</b><span>{{stats.payables|money}}</span></div>
+{% if session.get("user_role") == "مدير" %}
+<div class="card important"><b>صافي ربح المحل بعد العمولات</b><span>{{stats.shop_net_profit|money}}</span></div>
+<div class="card important"><b>صافي ربحك الكلي مع حصة الشبكة</b><span>{{stats.business_net_profit|money}}</span></div>
+{% endif %}
+</div>
+<div class="grid2">
+<section><h2>آخر المبيعات</h2><div class="table"><table><tr><th>الصنف</th><th>الموظف</th><th>الربح</th><th>العمولة</th></tr>
+{% for r in recent_sales %}<tr><td>{{r.product}}</td><td>{{r.employee or '-'}}</td><td>{{r.profit|money}}</td><td>{{r.commission|money}}</td></tr>{% endfor %}
+</table></div></section>
+<section><h2>تنبيه مخزون</h2><div class="table"><table><tr><th>الصنف</th><th>الكمية</th><th>الحد الأدنى</th></tr>
+{% for r in low_stock %}<tr><td>{{r.name}}</td><td>{{r.stock}}</td><td>{{r.min_stock}}</td></tr>{% endfor %}
+</table></div></section>
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}{% block content %}
+<h1>مبيعات الهواتف والأصناف</h1>
+<form method="post" class="panel formgrid">
+<label>التاريخ<input type="date" name="date"></label>
+<label>الصنف<select name="product_id" required onchange="fillPrice(this)"><option value="">اختر</option>{% for p in products %}<option value="{{p.id}}" data-price="{{p.sale_price}}">{{p.name}} — مخزون {{p.stock}}</option>{% endfor %}</select></label>
+<label>الكمية<input name="qty" type="number" step="0.01" value="1"></label>
+<label>سعر بيع الوحدة<input id="sale_price" name="sale_price" type="number" step="0.01" required></label>
+<label>الموظف<select name="employee_id"><option value="">بدون</option>{% for e in employees %}<option value="{{e.id}}">{{e.name}} ({{e.commission_rate}}%)</option>{% endfor %}</select></label>
+<label>طريقة الدفع<select name="payment_method"><option>نقدي</option><option>محفظة</option><option>تحويل بنكي</option><option>دين</option></select></label>
+<label class="wide">ملاحظات<input name="notes"></label><button>تسجيل البيع</button></form>
+<div class="table"><table><tr><th>التاريخ</th><th>الصنف</th><th>الموظف</th><th>الكمية</th><th>الربح</th><th>عمولة الموظف</th></tr>
+{% for r in rows %}<tr><td>{{r.date}}</td><td>{{r.product}}</td><td>{{r.employee or '-'}}</td><td>{{r.qty}}</td><td>{{r.profit|money}}</td><td>{{r.commission|money}}</td></tr>{% endfor %}
+</table></div>{% endblock %}

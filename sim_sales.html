@@ -1,0 +1,20 @@
+
+{% extends "base.html" %}{% block content %}
+<h1>بيع الخطوط والمادة المركبة</h1>
+<form method="post" class="panel formgrid">
+<label>التاريخ<input type="date" name="date"></label>
+<label>اسم الزبون<input name="customer"></label>
+<label>رقم الخط<input name="phone_number"></label>
+<label>الشركة<select name="company"><option>سيريتل</option><option>MTN</option><option>أخرى</option></select></label>
+<label>قيمة المادة المركبة المخصومة<input name="composite_material_cost" type="number" step="0.01" required></label>
+<label>المبلغ المقبوض من الزبون<input name="sale_price" type="number" step="0.01" value="0"></label>
+{% if session.get("user_role") == "مدير" %}
+<label>الموظف<select name="employee_id"><option value="">بدون</option>{% for e in employees %}<option value="{{e.id}}">{{e.name}} ({{e.commission_rate}}%)</option>{% endfor %}</select></label>
+{% endif %}
+<label>طريقة الدفع<select name="payment_method"><option>نقدي</option><option>محفظة</option><option>تحويل</option><option>دين</option></select></label>
+<label class="wide">ملاحظات<input name="notes"></label><button>تسجيل بيع الخط</button>
+</form>
+<p class="hint">الربح = المبلغ المقبوض من الزبون − قيمة المادة المركبة. إذا كان الخط مجانيًا للزبون ضع مبلغ البيع صفرًا، فتُسجَّل المادة المركبة كمصروف.</p>
+<div class="table"><table><tr><th>التاريخ</th><th>الزبون</th><th>الرقم</th><th>الشركة</th><th>المادة المركبة</th><th>المقبوض</th><th>الربح</th><th>الموظف</th><th>العمولة</th></tr>
+{% for r in rows %}<tr><td>{{r.date}}</td><td>{{r.customer}}</td><td>{{r.phone_number}}</td><td>{{r.company}}</td><td>{{r.composite_material_cost|money}}</td><td>{{r.sale_price|money}}</td><td>{{r.profit|money}}</td><td>{{r.employee or '-'}}</td><td>{{r.commission|money}}</td></tr>{% endfor %}
+</table></div>{% endblock %}

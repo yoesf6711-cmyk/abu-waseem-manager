@@ -1,0 +1,15 @@
+{% extends "base.html" %}{% block content %}
+<h1>المخزون والأكسسوارات والباركود</h1>
+<div class="grid2">
+<form method="post" class="panel"><h2>إضافة شراء/صنف</h2>
+<label>اسم الصنف<input name="name" required></label><label>التصنيف<select name="category"><option>هاتف</option><option>إكسسوار</option><option>قطعة صيانة</option><option>ألعاب</option><option>أخرى</option></select></label>
+<label>الباركود<input name="barcode" placeholder="اتركه فارغًا للتوليد"></label>
+<label>سعر الشراء<input name="purchase_price" type="number" step="0.01" required></label>
+<label>سعر البيع<input name="sale_price" type="number" step="0.01" required></label>
+<label>الكمية<input name="stock" type="number" step="0.01" required></label>
+<label>حد التنبيه<input name="min_stock" type="number" step="0.01" value="1"></label><button>إضافة للمخزون</button></form>
+<form method="get" class="panel"><h2>بحث سريع</h2><label>اسم أو باركود<input name="q" value="{{q}}"></label><button>بحث</button></form>
+</div>
+<div class="table"><table><tr><th>الصنف</th><th>التصنيف</th><th>الباركود</th><th>شراء</th><th>بيع</th><th>الكمية</th><th></th></tr>
+{% for r in rows %}<tr><td>{{r.name}}</td><td>{{r.category}}</td><td>{{r.barcode}}</td><td>{{r.purchase_price|money}}</td><td>{{r.sale_price|money}}</td><td>{{r.stock}}</td><td><a class="btn" target="_blank" href="/barcode/{{r.id}}">طباعة باركود</a></td></tr>{% endfor %}
+</table></div>{% endblock %}

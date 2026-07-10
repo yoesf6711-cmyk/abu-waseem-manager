@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block content %}
+<h1>ديون المحل والشبكة</h1>
+<form method="post" class="panel formgrid"><label>التاريخ<input type="date" name="date"></label><label>الجهة/الشخص<input name="party" required></label>
+<label>القسم<select name="section"><option>المحل</option><option>الشبكة</option></select></label><label>نوع الدين<select name="debt_type"><option>لنا</option><option>علينا</option></select></label>
+<label>المبلغ<input name="amount" type="number" required></label><label>المدفوع<input name="paid" type="number" value="0"></label><label>الاستحقاق<input name="due_date" type="date"></label><label>ملاحظات<input name="notes"></label><button>حفظ الدين</button></form>
+<div class="table"><table><tr><th>الجهة</th><th>القسم</th><th>النوع</th><th>المبلغ</th><th>المدفوع</th><th>الباقي</th><th>دفعة</th></tr>{% for r in rows %}<tr><td>{{r.party}}</td><td>{{r.section}}</td><td>{{r.debt_type}}</td><td>{{r.amount|money}}</td><td>{{r.paid|money}}</td><td>{{(r.amount-r.paid)|money}}</td><td><form class="inline" method="post" action="/debt/payment/{{r.id}}"><input name="amount" type="number" placeholder="دفعة" required><button>سداد</button></form></td></tr>{% endfor %}</table></div>
+{% endblock %}
